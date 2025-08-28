@@ -12,8 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const daySelect = document.getElementById('day');
     const startTimeInput = document.getElementById('start-time');
     const endTimeInput = document.getElementById('end-time');
-
-    // ส่วนใหม่: สำหรับปุ่มล้างและเมนูเลือกสัปดาห์
     const weekSelect = document.getElementById('week-select');
     const clearButton = document.getElementById('clear-schedule');
     
@@ -42,8 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const minute = parseInt(parts[1]);
         
         let totalMinutes = hour * 60 + minute;
-        // กรณีเวลาข้ามวัน (00:00 - 01:00) ให้บวกเพิ่มอีก 24 ชั่วโมง
-        if (hour >= 0 && hour <= 1 && totalMinutes < 1200) { // 1200 คือ 20:00
+        if (hour >= 0 && hour <= 1 && totalMinutes < 1200) {
             totalMinutes += 24 * 60;
         }
         return totalMinutes;
@@ -52,35 +49,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // ฟังก์ชันสำหรับสร้างแถบสีในตาราง
     const renderSchedule = (schedule) => {
         const dayRow = document.getElementById(schedule.day);
-        const container = dayRow.querySelector('.schedule-container');
-
-        if (container) {
+        if (dayRow) {
             const startTotalMinutes = timeToMinutes(schedule.start_time);
             const endTotalMinutes = timeToMinutes(schedule.end_time);
-            
-            // เวลาเริ่มและเวลาสิ้นสุดของตาราง (20:00 - 01:00)
             const tableStartMinutes = 20 * 60;
-            const tableEndMinutes = 1 * 60 + 24 * 60;
 
-            // คำนวณความกว้างและตำแหน่งซ้ายในหน่วยเปอร์เซ็นต์
-            const totalDuration = tableEndMinutes - tableStartMinutes;
-            const scheduleDuration = endTotalMinutes - startTotalMinutes;
-            const startOffset = startTotalMinutes - tableStartMinutes;
-
-            const leftPosition = (startOffset / totalDuration) * 100;
-            const widthPercentage = (scheduleDuration / totalDuration) * 100;
+            const startColumn = Math.round((startTotalMinutes - tableStartMinutes) / 30) + 1 + 1;
+            const endColumn = Math.round((endTotalMinutes - tableStartMinutes) / 30) + 1 + 1;
             
             const newScheduleBar = document.createElement('div');
             newScheduleBar.className = `schedule-bar ${subjectColors[schedule.subject]}`;
+            // แสดงผลเวลาที่ผู้ใช้กรอกเข้ามาจริง
+            newScheduleBar.textContent = `${schedule.subject} ${schedule.start_time.slice(0, 5)}-${schedule.end_time.slice(0, 5)}`;
             
-            const displayStartTime = schedule.start_time.split('.')[0].slice(0, 5);
-            const displayEndTime = schedule.end_time.split('.')[0].slice(0, 5);
-            newScheduleBar.textContent = `${schedule.subject} ${displayStartTime}-${displayEndTime}`;
+            newScheduleBar.style.gridColumnStart = startColumn;
+            newScheduleBar.style.gridColumnEnd = endColumn;
             
-            newScheduleBar.style.left = `${leftPosition}%`;
-            newScheduleBar.style.width = `${widthPercentage}%`;
-            
-            container.appendChild(newScheduleBar);
+            dayRow.appendChild(newScheduleBar);
         }
     };
 
@@ -95,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         // ล้างตารางเดิมก่อนแสดงผลใหม่
-        document.querySelectorAll('.schedule-container .schedule-bar').forEach(el => el.remove());
+        document.querySelectorAll('.day-row .schedule-bar').forEach(el => el.remove());
         
         data.forEach(renderSchedule);
     };
@@ -121,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const newSchedule = {
             subject: selectedSubject,
             day: selectedDay,
-            week: selectedWeek,
+            week: parseInt(selectedWeek),
             start_time: startTime,
             end_time: endTime
         };
@@ -133,10 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // หลังจากเพิ่มข้อมูลสำเร็จ ให้โหลดตารางใหม่เพื่อแสดงผล
         loadSchedules();
         
-        // ล้างข้อมูลในฟอร์ม
         startTimeInput.value = '';
         endTimeInput.value = '';
     });
@@ -152,14 +135,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Error clearing data:', error);
                 return;
             }
-            // เมื่อล้างข้อมูลสำเร็จ ให้โหลดตารางใหม่เพื่อแสดงผล
             loadSchedules();
         }
     });
 
-    // Event Listener เมื่อมีการเปลี่ยนสัปดาห์ ให้โหลดข้อมูลใหม่
     weekSelect.addEventListener('change', loadSchedules);
-
-    // เรียกใช้ฟังก์ชันโหลดข้อมูลเมื่อเปิดหน้าเว็บ
     loadSchedules();
 });
