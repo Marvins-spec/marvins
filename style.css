@@ -114,16 +114,15 @@ body {
     cursor: pointer;
     line-height: 1;
     z-index: 3;
-    visibility: hidden; /* ซ่อนปุ่มไว้ก่อน */
+    visibility: hidden;
     opacity: 0;
     transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
 }
 
 .schedule-bar:hover .delete-btn {
-    visibility: visible; /* แสดงเมื่อชี้เมาส์ */
+    visibility: visible;
     opacity: 1;
 }
-
 
 /* สีสำหรับแต่ละวิชา */
 .subject-คาถา { background-color: #f4a261; }
@@ -140,3 +139,39 @@ body {
 .subject-การบิน { background-color: #90be6d; }
 .subject-ตัวเลขมหัศจรรย์ { background-color: #6a0578; }
 .subject-ตัวอักษรรูน { background-color: #4b2e83; }
+
+/* === เพิ่ม Media Queries เพื่อการแสดงผลบนหน้าจอขนาดเล็ก === */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .form-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-container label {
+        margin-top: 10px;
+    }
+    
+    .timetable {
+        /* ปรับให้ตารางมี scrollbar แนวนอน */
+        overflow-x: auto; 
+    }
+    
+    .grid-header, .day-row {
+        /* ปรับขนาดคอลัมน์ให้เล็กลงสำหรับหน้าจอแคบ */
+        grid-template-columns: 80px repeat(11, 70px);
+    }
+
+    .time-slot, .day-label {
+        font-size: 12px;
+        padding: 8px 5px;
+    }
+    
+    .day-label {
+        position: static;
+        flex-shrink: 0;
+    }
+}
