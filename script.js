@@ -62,7 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const newScheduleBar = document.createElement('div');
             newScheduleBar.className = `schedule-bar ${subjectColors[schedule.subject]}`;
-            newScheduleBar.textContent = `${schedule.subject} ${schedule.start_time}-${schedule.end_time}`;
+            // === แก้ไขบรรทัดนี้ ===
+            newScheduleBar.textContent = `${schedule.subject} ${schedule.start_time.split('-')[0]}-${schedule.end_time.split('-')[0]}`;
             
             newScheduleBar.style.gridColumnStart = startColumn;
             newScheduleBar.style.gridColumnEnd = endColumn;
