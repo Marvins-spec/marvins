@@ -1,0 +1,96 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: auto;
+}
+
+.form-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.form-container label, .form-container select, .form-container input, .form-container button {
+    font-size: 16px;
+}
+
+.timetable {
+    background-color: white;
+    border: 1px solid #ccc;
+    display: grid;
+    /* 120px สำหรับวัน + 11 คอลัมน์ (30 นาที) */
+    grid-template-columns: 120px repeat(11, 1fr);
+    border-collapse: collapse;
+}
+
+.grid-header, .day-row {
+    display: contents;
+}
+
+.time-slot, .day-label {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    background-color: #f9f9f9;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.day-label {
+    grid-column: 1;
+    position: sticky;
+    left: 0;
+    z-index: 10;
+}
+
+/* สีหัวข้อวัน (พาสเทล) */
+.day-label.MON { background-color: #fcf9b4; } /* เหลืองพาสเทล */
+.day-label.TUE { background-color: #f9d3e8; } /* ชมพูพาสเทล */
+.day-label.WED { background-color: #c9f9c7; } /* เขียวพาสเทล */
+.day-label.THU { background-color: #fcd9a3; } /* ส้มพาสเทล */
+.day-label.FRI { background-color: #c0d8f0; } /* ฟ้าพาสเทล */
+.day-label.SAT { background-color: #d1b4f4; } /* ม่วงพาสเทล */
+.day-label.SUN { background-color: #f6c0c0; } /* แดงพาสเทล */
+
+.schedule-bar {
+    position: relative;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 2px;
+}
+
+/* สีสำหรับแต่ละวิชา */
+.subject-คาถา { background-color: #f4a261; }
+.subject-ป้องกันตัวจากศาสตร์มืด { background-color: #e76f51; }
+.subject-แปลงกาย { background-color: #2a9d8f; }
+.subject-ปรุงยา { background-color: #264653; }
+.subject-สัตว์วิเศษ { background-color: #e9c46a; }
+.subject-ดาราศาสตร์ { background-color: #2b2d42; }
+.subject-เล่นแร่แปรธาตุ { background-color: #5d4a66; }
+.subject-การพยากรณ์ { background-color: #8d4f4e; }
+.subject-สมุนไพร { background-color: #708090; }
+.subject-ประวัติศาสตร์เวทมนตร์ { background-color: #b2967d; }
+.subject-มักเกิ้ลศึกษา { background-color: #f4d35e; }
+.subject-การบิน { background-color: #90be6d; }
+.subject-ตัวเลขมหัศจรรย์ { background-color: #6a0578; }
+.subject-ตัวอักษรรูน { background-color: #4b2e83; }

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตารางเรียน</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h3>เพิ่มตารางเรียน</h3>
+            <label for="subject">วิชา:</label>
+            <select id="subject">
+                <option value="คาถา">คาถา</option>
+                <option value="ป้องกันตัวจากศาสตร์มืด">ป้องกันตัวจากศาสตร์มืด</option>
+                <option value="แปลงกาย">แปลงกาย</option>
+                <option value="ปรุงยา">ปรุงยา</option>
+                <option value="สัตว์วิเศษ">สัตว์วิเศษ</option>
+                <option value="ดาราศาสตร์">ดาราศาสตร์</option>
+                <option value="เล่นแร่แปรธาตุ">เล่นแร่แปรธาตุ</option>
+                <option value="การพยากรณ์">การพยากรณ์</option>
+                <option value="สมุนไพร">สมุนไพร</option>
+                <option value="ประวัติศาสตร์เวทมนตร์">ประวัติศาสตร์เวทมนตร์</option>
+                <option value="มักเกิ้ลศึกษา">มักเกิ้ลศึกษา</option>
+                <option value="การบิน">การบิน</option>
+                <option value="ตัวเลขมหัศจรรย์">ตัวเลขมหัศจรรย์</option>
+                <option value="ตัวอักษรรูน">ตัวอักษรรูน</option>
+            </select>
+            <label for="day">วัน:</label>
+            <select id="day">
+                <option value="MON">จันทร์</option>
+                <option value="TUE">อังคาร</option>
+                <option value="WED">พุธ</option>
+                <option value="THU">พฤหัสบดี</option>
+                <option value="FRI">ศุกร์</option>
+                <option value="SAT">เสาร์</option>
+                <option value="SUN">อาทิตย์</option>
+            </select>
+            <label for="start-time">เวลาเริ่ม (HH:mm):</label>
+            <input type="text" id="start-time" placeholder="เช่น 20:00">
+            <label for="end-time">เวลาจบ (HH:mm):</label>
+            <input type="text" id="end-time" placeholder="เช่น 21:30">
+            <button id="add-schedule">เพิ่ม</button>
+        </div>
+
+        <div class="timetable">
+            <div class="grid-header">
+                <div></div>
+                <div class="time-slot">20.00</div>
+                <div class="time-slot">20.30</div>
+                <div class="time-slot">21.00</div>
+                <div class="time-slot">21.30</div>
+                <div class="time-slot">22.00</div>
+                <div class="time-slot">22.30</div>
+                <div class="time-slot">23.00</div>
+                <div class="time-slot">23.30</div>
+                <div class="time-slot">00.00</div>
+                <div class="time-slot">00.30</div>
+                <div class="time-slot">01.00</div>
+            </div>
+            <div class="day-row" id="MON">
+                <div class="day-label MON">จันทร์</div>
+            </div>
+            <div class="day-row" id="TUE">
+                <div class="day-label TUE">อังคาร</div>
+            </div>
+            <div class="day-row" id="WED">
+                <div class="day-label WED">พุธ</div>
+            </div>
+            <div class="day-row" id="THU">
+                <div class="day-label THU">พฤหัสบดี</div>
+            </div>
+            <div class="day-row" id="FRI">
+                <div class="day-label FRI">ศุกร์</div>
+            </div>
+            <div class="day-row" id="SAT">
+                <div class="day-label SAT">เสาร์</div>
+            </div>
+            <div class="day-row" id="SUN">
+                <div class="day-label SUN">อาทิตย์</div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>
