@@ -9,6 +9,13 @@ body {
     margin: auto;
 }
 
+.controls {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
 .form-container {
     background-color: white;
     padding: 20px;

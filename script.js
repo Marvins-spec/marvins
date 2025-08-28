@@ -13,6 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const startTimeInput = document.getElementById('start-time');
     const endTimeInput = document.getElementById('end-time');
 
+    // ส่วนใหม่: สำหรับปุ่มล้างและเมนูเลือกสัปดาห์
+    const weekSelect = document.getElementById('week-select');
+    const clearButton = document.getElementById('clear-schedule');
+    
     // กำหนดสีสำหรับแต่ละวิชา (เชื่อมกับ CSS Class)
     const subjectColors = {
         'คาถา': 'subject-คาถา',
@@ -67,9 +71,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // โหลดข้อมูลเก่าจาก Supabase เมื่อเปิดหน้าเว็บ
+    // โหลดข้อมูลจาก Supabase เมื่อเปิดหน้าเว็บ หรือเปลี่ยนสัปดาห์
     const loadSchedules = async () => {
-        const { data, error } = await _supabase.from('schedules').select('*');
+        const selectedWeek = weekSelect.value;
+        const { data, error } = await _supabase.from('schedules').select('*').eq('week', selectedWeek);
         
         if (error) {
             console.error('Error loading data:', error);
@@ -82,13 +87,11 @@ document.addEventListener('DOMContentLoaded', () => {
         data.forEach(renderSchedule);
     };
 
-    // เรียกใช้ฟังก์ชันโหลดข้อมูลเมื่อเปิดหน้าเว็บ
-    loadSchedules();
-
     // Event Listener เมื่อกดปุ่ม "เพิ่ม"
     addButton.addEventListener('click', async () => {
         const selectedSubject = subjectSelect.value;
         const selectedDay = daySelect.value;
+        const selectedWeek = weekSelect.value;
         const startTime = startTimeInput.value;
         const endTime = endTimeInput.value;
         
@@ -105,14 +108,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const newSchedule = {
             subject: selectedSubject,
             day: selectedDay,
+            week: selectedWeek,
             start_time: startTime,
             end_time: endTime
         };
 
-        // ส่งข้อมูลไปที่ Supabase
-        const { data, error } = await _supabase.from('schedules').insert([newSchedule]);
+        const { error } = await _supabase.from('schedules').insert([newSchedule]);
         if (error) {
             console.error('Error adding schedule:', error);
+            alert('ไม่สามารถเพิ่มตารางได้ กรุณาตรวจสอบ Console');
             return;
         }
 
@@ -123,4 +127,26 @@ document.addEventListener('DOMContentLoaded', () => {
         startTimeInput.value = '';
         endTimeInput.value = '';
     });
+
+    // Event Listener เมื่อกดปุ่ม "ล้างตาราง"
+    clearButton.addEventListener('click', async () => {
+        const selectedWeek = weekSelect.value;
+        const confirmClear = confirm(`คุณแน่ใจหรือไม่ว่าต้องการล้างตารางเรียนของสัปดาห์ที่ ${selectedWeek}?`);
+        
+        if (confirmClear) {
+            const { error } = await _supabase.from('schedules').delete().eq('week', selectedWeek);
+            if (error) {
+                console.error('Error clearing data:', error);
+                return;
+            }
+            // เมื่อล้างข้อมูลสำเร็จ ให้โหลดตารางใหม่เพื่อแสดงผล
+            loadSchedules();
+        }
+    });
+
+    // Event Listener เมื่อมีการเปลี่ยนสัปดาห์ ให้โหลดข้อมูลใหม่
+    weekSelect.addEventListener('change', loadSchedules);
+
+    // เรียกใช้ฟังก์ชันโหลดข้อมูลเมื่อเปิดหน้าเว็บ
+    loadSchedules();
 });
