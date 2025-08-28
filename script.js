@@ -14,6 +14,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const endTimeInput = document.getElementById('end-time');
     const weekSelect = document.getElementById('week-select');
     const clearButton = document.getElementById('clear-schedule');
+
+    const shortSubjectNames = {
+    'คาถา': 'คาถา',
+    'ป้องกันตัวจากศาสตร์มืด': 'ป้องฯ',
+    'แปลงกาย': 'แปลงฯ',
+    'ปรุงยา': 'ปรุงฯ',
+    'สัตว์วิเศษ': 'สัตว์ฯ',
+    'ดาราศาสตร์': 'ดาราฯ',
+    'เล่นแร่แปรธาตุ': 'เล่นแร่ฯ',
+    'การพยากรณ์': 'พยากรณ์',
+    'สมุนไพร': 'สมุนไพร',
+    'ประวัติศาสตร์เวทมนตร์': 'ประวัติฯ',
+    'มักเกิ้ลศึกษา': 'มักเกิ้ลฯ',
+    'การบิน': 'การบิน',
+    'ตัวเลขมหัศจรรย์': 'เลขฯ',
+    'ตัวอักษรรูน': 'รูน'
+};
     
     // กำหนดสีสำหรับแต่ละวิชา (เชื่อมกับ CSS Class)
     const subjectColors = {
@@ -60,8 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const newScheduleBar = document.createElement('div');
             newScheduleBar.className = `schedule-bar ${subjectColors[schedule.subject]}`;
             // แสดงผลเวลาที่ผู้ใช้กรอกเข้ามาจริง
-            newScheduleBar.textContent = `${schedule.subject} ${schedule.start_time.slice(0, 5)}-${schedule.end_time.slice(0, 5)}`;
-            
+            const displaySubject = shortSubjectNames[schedule.subject] || schedule.subject;
+            newScheduleBar.textContent = `${displaySubject} ${schedule.start_time.slice(0, 5)}-${schedule.end_time.slice(0, 5)}`;            
             newScheduleBar.style.gridColumnStart = startColumn;
             newScheduleBar.style.gridColumnEnd = endColumn;
             
