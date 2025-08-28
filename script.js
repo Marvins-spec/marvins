@@ -1,5 +1,6 @@
 // === ขั้นตอนที่ 1: ใส่ URL และ Key ของคุณที่นี่ ===
 const SUPABASE_URL = 'https://zbclcoumjqozcsovlorw.supabase.co';
+
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpiY2xjb3VtanFvemNzb3Zsb3J3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzNTYwNjksImV4cCI6MjA3MTkzMjA2OX0.n4kNtuxm-_TzBORMWM5WXzuEkGzGd6BqkvDBcJz5fLg';
 
 const { createClient } = supabase;
@@ -52,23 +53,35 @@ document.addEventListener('DOMContentLoaded', () => {
     // ฟังก์ชันสำหรับสร้างแถบสีในตาราง
     const renderSchedule = (schedule) => {
         const dayRow = document.getElementById(schedule.day);
-        if (dayRow) {
+        const container = dayRow.querySelector('.schedule-container');
+
+        if (container) {
             const startTotalMinutes = timeToMinutes(schedule.start_time);
             const endTotalMinutes = timeToMinutes(schedule.end_time);
+            
+            // เวลาเริ่มและเวลาสิ้นสุดของตาราง (20:00 - 01:00)
             const tableStartMinutes = 20 * 60;
+            const tableEndMinutes = 1 * 60 + 24 * 60;
 
-            const startColumn = (startTotalMinutes - tableStartMinutes) / 30 + 1 + 1;
-            const endColumn = (endTotalMinutes - tableStartMinutes) / 30 + 1 + 1;
+            // คำนวณความกว้างและตำแหน่งซ้ายในหน่วยเปอร์เซ็นต์
+            const totalDuration = tableEndMinutes - tableStartMinutes;
+            const scheduleDuration = endTotalMinutes - startTotalMinutes;
+            const startOffset = startTotalMinutes - tableStartMinutes;
+
+            const leftPosition = (startOffset / totalDuration) * 100;
+            const widthPercentage = (scheduleDuration / totalDuration) * 100;
             
             const newScheduleBar = document.createElement('div');
             newScheduleBar.className = `schedule-bar ${subjectColors[schedule.subject]}`;
-            // === แก้ไขบรรทัดนี้ ===
-            newScheduleBar.textContent = `${schedule.subject} ${schedule.start_time.split('-')[0]}-${schedule.end_time.split('-')[0]}`;
             
-            newScheduleBar.style.gridColumnStart = startColumn;
-            newScheduleBar.style.gridColumnEnd = endColumn;
+            const displayStartTime = schedule.start_time.split('.')[0].slice(0, 5);
+            const displayEndTime = schedule.end_time.split('.')[0].slice(0, 5);
+            newScheduleBar.textContent = `${schedule.subject} ${displayStartTime}-${displayEndTime}`;
             
-            dayRow.appendChild(newScheduleBar);
+            newScheduleBar.style.left = `${leftPosition}%`;
+            newScheduleBar.style.width = `${widthPercentage}%`;
+            
+            container.appendChild(newScheduleBar);
         }
     };
 
@@ -83,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         // ล้างตารางเดิมก่อนแสดงผลใหม่
-        document.querySelectorAll('.day-row .schedule-bar').forEach(el => el.remove());
+        document.querySelectorAll('.schedule-container .schedule-bar').forEach(el => el.remove());
         
         data.forEach(renderSchedule);
     };
