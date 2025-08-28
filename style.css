@@ -89,6 +89,7 @@ body {
     position: sticky;
     left: 0;
     z-index: 10;
+    height: auto;
 }
 
 /* สีหัวข้อวัน (พาสเทล) */
@@ -193,4 +194,5 @@ body {
         position: static;
         flex-shrink: 0;
     }
+
 }
