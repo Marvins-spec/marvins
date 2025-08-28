@@ -1,6 +1,5 @@
 // === ขั้นตอนที่ 1: ใส่ URL และ Key ของคุณที่นี่ ===
 const SUPABASE_URL = 'https://zbclcoumjqozcsovlorw.supabase.co';
-
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpiY2xjb3VtanFvemNzb3Zsb3J3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzNTYwNjksImV4cCI6MjA3MTkzMjA2OX0.n4kNtuxm-_TzBORMWM5WXzuEkGzGd6BqkvDBcJz5fLg';
 
 const { createClient } = supabase;
