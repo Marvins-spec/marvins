@@ -33,6 +33,23 @@ document.addEventListener('DOMContentLoaded', () => {
         'ตัวอักษรรูน': 'subject-ตัวอักษรรูน'
     };
 
+    const subjectAbbreviations = {
+    'คาถา': 'คาถา',
+    'ป้องกันตัวจากศาสตร์มืด': 'ป้องกันฯ',
+    'แปลงกาย': 'แปลงกาย',
+    'ปรุงยา': 'ปรุงยา',
+    'สัตว์วิเศษ': 'สัตว์ฯ',
+    'ดาราศาสตร์': 'ดาราศาสตร์',
+    'เล่นแร่แปรธาตุ': 'เล่นแร่ฯ',
+    'การพยากรณ์': 'พยากรณ์',
+    'สมุนไพร': 'สมุนไพร',
+    'ประวัติศาสตร์เวทมนตร์': 'ประวัติฯ',
+    'มักเกิ้ลศึกษา': 'มักเกิ้ลฯ',
+    'การบิน': 'การบิน',
+    'ตัวเลขมหัศจรรย์': 'ตัวเลขฯ',
+    'ตัวอักษรรูน': 'อักษรฯ'
+    };
+
     // ฟังก์ชันแปลงเวลาจาก HH:mm เป็นนาทีทั้งหมด
     const timeToMinutes = (time) => {
         const parts = time.split(':');
@@ -59,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const newScheduleBar = document.createElement('div');
             newScheduleBar.className = `schedule-bar ${subjectColors[schedule.subject]}`;
-            newScheduleBar.textContent = `${schedule.subject} ${schedule.start_time.slice(0, 5)}-${schedule.end_time.slice(0, 5)}`;
+            newScheduleBar.textContent = `${subjectAbbreviations[schedule.subject] || schedule.subject} ${schedule.start_time.slice(0, 5)}-${schedule.end_time.slice(0, 5)}`;
             newScheduleBar.style.gridColumnStart = startColumn;
             newScheduleBar.style.gridColumnEnd = endColumn;
 
@@ -159,4 +176,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     weekSelect.addEventListener('change', loadSchedules);
     loadSchedules();
+
 });
