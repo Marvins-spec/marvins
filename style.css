@@ -1,7 +1,6 @@
 body {
     font-family: 'Arial', sans-serif;
     padding: 20px;
-    
     background-image: url('background.jpg');
     background-size: cover;
     background-attachment: fixed;
@@ -11,7 +10,6 @@ body {
 .container {
     max-width: 1400px;
     margin: auto;
-    
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -29,7 +27,7 @@ body {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
     display: flex;
     gap: 10px;
@@ -37,25 +35,27 @@ body {
     flex-wrap: wrap;
 }
 
-.form-container label, .form-container select, .form-container input, .form-container button {
+.form-container label,
+.form-container select,
+.form-container input,
+.form-container button {
     font-size: 16px;
 }
 
-/* ส่วน CSS สำหรับตารางแบบเดิม */
+/* ส่วน CSS สำหรับตารางหลัก */
 .timetable {
     background-color: white;
     border: 1px solid #ccc;
     display: grid;
-    /* 120px สำหรับวัน + 11 คอลัมน์ (30 นาที) */
     grid-template-columns: 120px repeat(11, 1fr);
     border-collapse: collapse;
 }
 
-.grid-header, .day-row {
+.grid-header {
     display: contents;
 }
 
-.time-slot, .day-label {
+.time-slot {
     border: 1px solid #ccc;
     padding: 10px;
     text-align: center;
@@ -64,8 +64,28 @@ body {
     font-size: 14px;
 }
 
+/* ส่วนแสดงผลของแต่ละวัน */
+.day-row {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+    border-top: 1px solid #ccc;
+    position: relative;
+    align-items: stretch;
+}
+
 .day-label {
     grid-column: 1;
+    padding: 10px;
+    text-align: center;
+    background-color: #f9f9f9;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
     position: sticky;
     left: 0;
     z-index: 10;
@@ -96,7 +116,6 @@ body {
     margin: 2px;
 }
 
-/* เพิ่ม CSS สำหรับปุ่มลบ */
 .delete-btn {
     position: absolute;
     top: 0;
@@ -156,16 +175,16 @@ body {
     }
     
     .timetable {
-        /* ปรับให้ตารางมี scrollbar แนวนอน */
         overflow-x: auto; 
     }
     
-    .grid-header, .day-row {
-        /* ปรับขนาดคอลัมน์ให้เล็กลงสำหรับหน้าจอแคบ */
+    .grid-header,
+    .day-row {
         grid-template-columns: 80px repeat(11, 70px);
     }
 
-    .time-slot, .day-label {
+    .time-slot,
+    .day-label {
         font-size: 12px;
         padding: 8px 5px;
     }
